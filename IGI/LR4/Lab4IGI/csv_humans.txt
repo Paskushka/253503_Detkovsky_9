@@ -1,0 +1,4 @@
+Surname,Height,Gender
+Xot,192,male
+Ait,162,female
+Rat,192,female
