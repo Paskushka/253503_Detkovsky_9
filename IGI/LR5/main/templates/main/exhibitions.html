@@ -1,0 +1,30 @@
+{% extends 'main/layout.html'  %}
+
+{% block title %}
+    Exhibitions
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_superuser %}
+        <h2>Add new exhibition</h2>
+        <li><a href="{% url 'add_exhibition' %}">Add exhibition</a></li>
+    {% endif %}
+
+    <div class="features" style="float: left;">
+        <h1>Exhibitions</h1>
+
+        {% if user.is_authenticated %}
+                {% if not user.is_superuser%}
+                    {% if not user.is_staff%}
+                        <button> <a href="{% url 'add_order' %}">Click me </a></button>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+        {% for el in exhibitions%}
+            <h2>Name: {{el.name}}</h2>
+            <p>Date: {{el.date}} Size of Group: {{el.people}} Cost: {{el.cost}} Hall: {{el.hall}}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

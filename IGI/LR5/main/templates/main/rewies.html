@@ -1,0 +1,22 @@
+{% extends 'main/layout.html' %}
+
+{% block content %}
+    {% if not user.is_staff %}
+        <h2>Add review</h2>
+        <form method="post">
+            {% csrf_token %} 
+            {{ form.as_p }}
+            <p><button type="submit">Add review</button></p>
+        </form>
+    {% endif %}
+    
+    <h1>Reviews</h1>
+    {% for review in reviews %}
+        <div>
+            <p>{{ review.author.username }}</p>
+            <p>{{ review.rate }}</p>
+            <p>{{ review.content }}</p>
+            <p>{{ review.date }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

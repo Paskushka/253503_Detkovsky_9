@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}  {% endblock %}</title>
+
+</head>
+<body>
+    <aside style="float: left; width: 20%; padding: 2.5%; height: 100vh; border-right: 5px solid;">
+        <span class = "name" style="font-size: 50px;">Art Museum</span>
+        <h3 style="font-size: 30px;" >Navigation</h3>
+        <ul>
+            <a href="{% url 'home' %}"><li>Home</li></a>
+            <a href="{% url 'myzeum' %}"><li>Museum</li></a>
+            <a href="{% url 'exhibitions' %}"><li>Exhibitions</li></a>
+            <a href="{% url 'about' %}"><li>About us</li></a>
+            <a href="{% url 'news' %}"><li>News</li></a>
+            <a href="{% url 'contacts' %}"><li>Contacts</li></a>
+            <a href="{% url 'dictionary' %}"><li>Questions</li></a>
+            <a href="{% url 'policy' %}"><li>Privacy Policy</li></a>
+            <a href="{% url 'vacancies' %}"><li>Vacancies</li></a>
+            <a href="{% url 'reviews' %}"><li>Reviews</li></a>
+            <a href="{% url 'discounts' %}"><li>Promotional codes and coupons</li></a>
+        </ul>
+    </aside>
+    <p>
+        {% if user.is_authenticated %}
+                {% if not user.is_superuser %}
+                {% if user.is_staff %}
+                    <li><a href="{% url 'employee_profile' %}">Profile</a></li>
+                {% else %}
+                    <li><a href="{% url 'client_profile' %}">Profile</a></li>
+                {% endif %}
+                {% endif %}
+                <li style="float: right; list-style-type: none;"><a href="{% url 'logout' %}" >Log out</a></li>
+            {% else %}
+                <li style="float: right; list-style-type: none;"><a href="{% url 'login' %}" >Log in</a></li>
+                    <a style="float: right;"> | </a>
+                <li style="float: right; list-style-type: none;"><a href="{% url 'register' %}" >Sign up</a></li>
+            {% endif %}
+
+            {% if user.is_staff %}
+                <li style="float: up; list-style-type: none;"><a href="{% url 'employee_positions' %}">Employee positions</a></li>
+                <li style="float: up; list-style-type: none;"><a href="{% url 'employees' %}">Employees</a></li>
+            {% endif %}
+
+            {% if user.is_superuser %}
+                <li style="float: up; list-style-type: none;"><a href="{% url 'clients' %}">Clients</a></li>
+            {% endif %}
+    </p>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
